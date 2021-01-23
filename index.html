@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Circles</title>
+</head>
+<body>
+    
+<style type="text/css">
+    
+</style>
+
+<div>
+    <label for="" style="font-size: large;">Hora inicial </label><br>
+</div>
+<div>
+    <label for="" id="horainicial" style="font-size: large;"></label>
+</div>
+
+<div id="time">
+    <h1 id="tempo">00:00:00</h1>    
+</div>
+<div id="buttons">
+    <button type="button" id="lap" disabled>Lap</button>
+    <button type="button" id="StartPause">Start</button>
+    <button type="button" id="reset">Reset</button>
+</div>
+
+
+<ol id="dados">
+    
+</ol>
+    
+<script type="text/javascript">
+    var title = document.getElementById('tempo')
+    var startpause = document.getElementById('StartPause')
+    var reset = document.getElementById('reset')
+    var lap = document.getElementById('lap')
+    var horainicial = ''
+
+
+    var numLap = 0
+    var s = ''
+    
+    var hours = 0
+    var minutes = 0
+    var seconds = -1
+    
+    var myInterval = -1
+
+    startpause.addEventListener('click', function(event){
+        if(startpause.innerHTML == 'Start'){
+            startpause.innerHTML = 'Pause' 
+            changeColor_Backgroundcolor(startpause.innerHTML) 
+
+            if(horainicial.length < 1){                
+                horainicial = GetDateNow(false, true, false)
+                document.getElementById('horainicial').innerHTML = horainicial
+            } 
+            
+            if(myInterval = -1){
+                myInterval = setInterval(function(){                    
+
+                    if(minutes == 59 && seconds == 59){
+                        minutes = -1 
+                        hours++ 
+                    }
+
+                    if (seconds == 59){
+                        seconds = -1 
+                        minutes++ 
+                    }
+
+                    seconds ++ 
+
+                    if(hours < 10){
+                        if(hours.toString.length == 1){
+                            hours = '0' + hours 
+                        }
+                    }
+                    
+                    if(minutes < 10){
+                        if(minutes.toString.length == 1){
+                            minutes = '0' + minutes 
+                        }
+                    }
+
+                    if(seconds < 10){
+                        seconds = '0' + seconds 
+                    }
+
+                    title.innerHTML = hours + ':' + minutes + ':' + seconds 
+                }, 1000) 
+            }
+        } else {
+            startpause.innerHTML = 'Start' 
+            changeColor_Backgroundcolor(startpause.innerHTML) 
+            clearInterval(myInterval) 
+        }
+    }) 
+
+    reset.addEventListener('click', function(){
+        clearTimeout(myInterval) 
+        hours = 0 
+        minutes = 0 
+        seconds = -1 
+        numLap = 0 
+
+        startpause.innerHTML = 'Start' 
+        changeColor_Backgroundcolor(startpause.innerHTML) 
+        title.innerHTML = '00:00:00' 
+        document.getElementById('dados').innerHTML = '' 
+
+        numLap = 0 
+        s = '' 
+        document.getElementById('dados').append('')
+        horainicial.innerHTML = ''
+    }) 
+
+    lap.addEventListener('click', function(event){
+        numLap ++ 
+        
+        s += `<label id="laps">` + numLap + ' -> ' + title.innerHTML + `</label><br>` 
+                
+        document.getElementById('dados').innerHTML = s 
+    }) 
+
+    function changeColor_Backgroundcolor(text){
+        if(text == 'Start'){
+            startpause.style.backgroundColor = "#00a100" 
+            startpause.style.color = "#f0f8ff" 
+        } else if (text == 'Pause'){
+            startpause.style.backgroundColor = "#c0c000" 
+            startpause.style.color = "#000000" 
+        }
+    }
+
+    setInterval(() => {
+        if(startpause.innerHTML == 'Pause'){
+            lap.removeAttribute('disabled') 
+            lap.style.backgroundColor = "#0057b4" 
+            lap.style.boxShadow = "#f0f8ff" 
+        } else {
+            lap.setAttribute('disabled', 'disabled') 
+            lap.style.backgroundColor = "#d4d4d4" 
+            lap.style.boxShadow = "#00000033" 
+        }
+    }, 100) 
+
+    function GetDateNow(dataatual, horaatual, datahoraatual){
+        var data = new Date
+        
+        var dd = Array('Domingo','Segunda-Feira','Terça-Feira','Quarta-Feira','Quinta-Feira','Sexta-Feira','Sabádo')
+        var mm = Array('1','2','3','4','5','6','7','8','9','10','11','12') // 0= janeiro ~~ 12 = fevereiro
+        
+        var dia = data.getDate()
+        var diasemana = dd[data.getDay()]
+        var mes = mm[data.getMonth()]
+        var ano = data.getFullYear()
+        
+        var hora = data.getHours()
+        var min = data.getMinutes()
+        var seg = data.getSeconds()
+
+        if(hora < 10){
+            dia = '0' + dia
+        }
+        
+        if(mes < 10){
+            mes = '0' + mes
+        }
+        
+
+        if(hora < 10){
+            hora = '0' + hora
+        }
+
+        if(min < 10){
+            min = '0' + min
+        }
+
+        if(seg < 10){
+            seg = '0' + seg
+        }
+
+        var s = ''
+
+        if(dataatual){
+            s = dia + '/' + mes + '/' + ano
+        } else if(horaatual) {
+            s = hora + ':' + min + ':' + seg
+        } else {
+            s = dia + '/' + mes + '/' + ano + ' ' + hora + ':' + min + ':' + seg
+        }
+
+        return s
+    }   
+
+</script>
+
+</body>
+</html>

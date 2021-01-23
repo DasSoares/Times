@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+* {
+    font-family: 'Inter';
+}
+    
+body {       
+    width: 98vw;
+    height: 50%;
+    background: #667a8f;
+    font-family: 'Inter';
+}
+
+div {        
+    display: flex;
+    justify-content: center;
+}
+
+#time {
+    font-size: 50px;
+    font-display: auto;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/*     button {
+    flex-direction: row;
+} */
+
+button {
+    font-size: 20px;
+    width: 100px;
+    height: 100px;
+    border: 0px #ffffff;
+    border-radius: 50%;
+    overflow: hidden;
+    float: left;
+    margin: 15px;
+    transition: 0.3s ease;
+}
+
+button:hover{
+    transition: 0.4s;
+    box-shadow: 5px 3px 20px 1px rgba(63, 63, 63, 0.666);
+}
+
+button:disabled {
+    background-color: rgb(212, 212, 212);
+    box-shadow: 0px 0px 0px 0px rgba(0,0,0,0.2);
+}
+
+#reset {
+    background: #a50000;
+    color: aliceblue;
+}
+
+#StartPause{
+    background: #00a100;
+    color: #f0f8ff;
+}
+
+#lap {
+    background-color: #0057b4;
+    color: #f0f8ff;
+}
+
+::selection {
+    background-color: rgb(226, 226, 0);
+    color: #000;
+}
